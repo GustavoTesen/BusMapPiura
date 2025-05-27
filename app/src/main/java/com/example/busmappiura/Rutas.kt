@@ -1,29 +1,23 @@
-package com.example.busmappiura
-
+import android.graphics.Color
 import android.os.Bundle
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.busmappiura.R
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.maps.model.PolylineOptions
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.android.material.textfield.TextInputLayout
+import com.google.android.gms.maps.model.*
 
 class Rutas : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var autoCompleteTextView: AutoCompleteTextView
-    private lateinit var textInputLayout: TextInputLayout
-    private lateinit var opciones: List<String>
-    private var esPrimeraVez: Boolean = true
     private var mapa: GoogleMap? = null
 
-    // Definimos las rutas con listas de coordenadas LatLng
-    private val rutasMap: Map<String, List<LatLng>> = mapOf(
+    // Define todas las rutas de IDA
+    private val rutasIda: Map<String, List<LatLng>> = mapOf(
         "Ruta A" to listOf(
             LatLng(-5.19449, -80.63282),
             LatLng(-5.19300, -80.63000),
@@ -35,153 +29,97 @@ class Rutas : AppCompatActivity(), OnMapReadyCallback {
             LatLng(-5.19800, -80.63700)
         ),
         "Ruta C" to listOf(
-            LatLng(-5.1916959, -80.6647480),
-            LatLng(-5.19100, -80.63400),
-            LatLng(-5.18800, -80.63600)
-        ),
-        "Ruta D" to listOf(
-            LatLng(-5.19449, -80.63282),
-            LatLng(-5.1916959, -80.6647480)
+            LatLng(-5.20000, -80.64000),
+            LatLng(-5.20200, -80.64200),
+            LatLng(-5.20400, -80.64400)
         )
+        // Agrega más rutas aquí...
+    )
+
+    // Define todas las rutas de VUELTA
+    private val rutasVuelta: Map<String, List<LatLng>> = mapOf(
+        "Ruta A" to listOf(
+            LatLng(-5.19000, -80.62800),
+            LatLng(-5.19300, -80.63000),
+            LatLng(-5.19449, -80.63282)
+        ),
+        "Ruta B" to listOf(
+            LatLng(-5.19800, -80.63700),
+            LatLng(-5.19550, -80.63500),
+            LatLng(-5.19449, -80.63282)
+        ),
+        "Ruta C" to listOf(
+            LatLng(-5.20400, -80.64400),
+            LatLng(-5.20200, -80.64200),
+            LatLng(-5.20000, -80.64000)
+        )
+        // Agrega más rutas aquí...
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rutas)
 
-        try {
-            val mapFragment = supportFragmentManager.findFragmentById(R.id.map_fragment) as? SupportMapFragment
-            mapFragment?.getMapAsync(this)
+        autoCompleteTextView = findViewById(R.id.auto)
 
-            autoCompleteTextView = findViewById(R.id.auto)
-            textInputLayout = findViewById(R.id.text_input_layout)
-        } catch (e: Exception) {
-            Toast.makeText(this, "Error al inicializar: ${e.message}", Toast.LENGTH_LONG).show()
-            finish()
-            return
+        // Adaptador con todas las claves de rutasIda (asumiendo que Ida y Vuelta tienen las mismas claves)
+        val nombresRutas = rutasIda.keys.toList()
+        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, nombresRutas)
+        autoCompleteTextView.setAdapter(adapter)
+
+        autoCompleteTextView.setOnItemClickListener { _, _, position, _ ->
+            val rutaSeleccionada = nombresRutas[position]
+            mostrarRutaEnMapa(rutaSeleccionada)
         }
 
-        val userId = FirebaseAuth.getInstance().currentUser?.uid
-        val db = FirebaseFirestore.getInstance()
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map_fragment) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+    }
 
-        if (userId == null) {
-            Toast.makeText(this, "Error: usuario no autenticado", Toast.LENGTH_SHORT).show()
-            finish()
-            return
-        }
-
-        val userDocRef = db.collection("usuarios").document(userId)
-        userDocRef.get()
-            .addOnSuccessListener { document ->
-                try {
-                    if (!document.exists()) {
-                        esPrimeraVez = true
-                        userDocRef.set(hashMapOf("primeraVez" to true))
-                    } else {
-                        esPrimeraVez = document.getBoolean("primeraVez") ?: true
-                    }
-
-                    opciones = if (esPrimeraVez) {
-                        listOf(
-                            "Seleccione una ruta",
-                            "Ruta A",
-                            "Ruta B",
-                            "Ruta C",
-                            "Ruta D",
-                            "Ruta E",
-                            "Ruta F",
-                            "Ruta G",
-                            "Ruta H"
-                        )
-                    } else {
-                        listOf(
-                            "Ruta A",
-                            "Ruta B",
-                            "Ruta C",
-                            "Ruta D",
-                            "Ruta E",
-                            "Ruta F",
-                            "Ruta G",
-                            "Ruta H"
-                        )
-                    }
-
-                    val adapter = ArrayAdapter(this,R.layout.list_item, opciones)
-                    autoCompleteTextView.setAdapter(adapter)
-
-                    autoCompleteTextView.setOnItemClickListener { parent, _, position, _ ->
-                        val rutaSeleccionada = parent.getItemAtPosition(position) as String
-
-                        if (esPrimeraVez && rutaSeleccionada == "Seleccione una ruta") {
-                            Toast.makeText(
-                                this@Rutas,
-                                "Por favor, seleccione una ruta válida",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            autoCompleteTextView.setText("", false)
-                        } else {
-                            Toast.makeText(this@Rutas, "Seleccionaste: $rutaSeleccionada", Toast.LENGTH_SHORT).show()
-
-                            if (esPrimeraVez) {
-                                userDocRef.update("primeraVez", false)
-                                esPrimeraVez = false
-                            }
-
-                            mostrarRutaEnMapa(rutaSeleccionada)
-                        }
-                    }
-
-                    autoCompleteTextView.threshold = 0
-                    autoCompleteTextView.setOnClickListener {
-                        autoCompleteTextView.showDropDown()
-                    }
-
-                    if (esPrimeraVez) {
-                        autoCompleteTextView.setText("Seleccione una ruta", false)
-                    }
-                } catch (e: Exception) {
-                    Toast.makeText(this@Rutas, "Error al configurar opciones: ${e.message}", Toast.LENGTH_LONG).show()
-                }
-            }
-            .addOnFailureListener { exception ->
-                Toast.makeText(this, "Error al obtener datos: ${exception.message}", Toast.LENGTH_SHORT).show()
-            }
+    override fun onMapReady(googleMap: GoogleMap) {
+        mapa = googleMap
+        mapa?.mapType = GoogleMap.MAP_TYPE_NORMAL
     }
 
     private fun mostrarRutaEnMapa(nombreRuta: String) {
         try {
             mapa?.clear()
 
-            val puntos = rutasMap[nombreRuta]
-            if (puntos != null && puntos.isNotEmpty()) {
-                mapa?.addMarker(MarkerOptions().position(puntos.first()).title("$nombreRuta - Inicio"))
-                mapa?.addMarker(MarkerOptions().position(puntos.last()).title("$nombreRuta - Fin"))
+            val ida = rutasIda[nombreRuta]
+            val vuelta = rutasVuelta[nombreRuta]
 
-                mapa?.moveCamera(CameraUpdateFactory.newLatLngZoom(puntos.first(), 15f))
-
-                val polylineOptions = PolylineOptions()
-                    .addAll(puntos)
-                    .color(android.graphics.Color.BLUE)
-                    .width(8f)
-
-                mapa?.addPolyline(polylineOptions)
-            } else {
-                Toast.makeText(this, "No hay puntos para la ruta seleccionada", Toast.LENGTH_SHORT).show()
+            if ((ida == null || ida.isEmpty()) && (vuelta == null || vuelta.isEmpty())) {
+                Toast.makeText(this, "No hay datos para la ruta $nombreRuta", Toast.LENGTH_SHORT).show()
+                return
             }
-        } catch (e: Exception) {
-            Toast.makeText(this, "Error al mostrar ruta: ${e.message}", Toast.LENGTH_SHORT).show()
-        }
-    }
 
-    override fun onMapReady(googleMap: GoogleMap) {
-        try {
-            mapa = googleMap
+            ida?.let {
+                mapa?.addMarker(MarkerOptions().position(it.first()).title("Inicio - Ida"))
+                mapa?.addPolyline(
+                    PolylineOptions()
+                        .addAll(it)
+                        .color(Color.BLUE)
+                        .width(10f)
+                )
+            }
 
-            val ubicacionInicial = LatLng(-5.19449, -80.63282)
-            mapa?.moveCamera(CameraUpdateFactory.newLatLngZoom(ubicacionInicial, 13f))
-            mapa?.addMarker(MarkerOptions().position(ubicacionInicial).title("Ubicación inicial"))
+            vuelta?.let {
+                mapa?.addMarker(MarkerOptions().position(it.last()).title("Fin - Vuelta"))
+                mapa?.addPolyline(
+                    PolylineOptions()
+                        .addAll(it)
+                        .color(Color.RED)
+                        .width(10f)
+                )
+            }
+
+            val centro = ida?.firstOrNull() ?: vuelta?.firstOrNull()
+            centro?.let {
+                mapa?.moveCamera(CameraUpdateFactory.newLatLngZoom(it, 15f))
+            }
+
         } catch (e: Exception) {
-            Toast.makeText(this, "Error al inicializar mapa: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Error al mostrar la ruta: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
 }
