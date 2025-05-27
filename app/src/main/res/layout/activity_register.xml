@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#16425B">
+
+    <TextView
+        android:id="@+id/registro_titulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Registro"
+        android:textSize="24sp"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="60dp"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/txtCorreo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Correo electrónico"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="140dp"
+        android:layout_marginLeft="50dp"/>
+
+    <EditText
+        android:id="@+id/etCorreo"
+        android:layout_width="309dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="170dp"
+        android:layout_marginLeft="50dp"
+        android:background="@drawable/retangle"
+        android:hint="Ingresa tu correo"
+        android:inputType="textEmailAddress"
+        android:paddingLeft="10dp"
+        android:textColor="#000000"
+        android:textColorHint="#CCCCCC"/>
+
+    <TextView
+        android:id="@+id/txtPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Contraseña"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="240dp"
+        android:layout_marginLeft="50dp"/>
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="309dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="270dp"
+        android:layout_marginLeft="50dp"
+        android:background="@drawable/rectangle1"
+        android:hint="Crea una contraseña"
+        android:inputType="textPassword"
+        android:paddingLeft="10dp"
+        android:textColor="#000000"
+        android:textColorHint="#CCCCCC"/>
+
+    <Button
+        android:id="@+id/btnRegistrar"
+        android:layout_width="309dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="360dp"
+        android:layout_marginLeft="50dp"
+        android:backgroundTint="#F7941D"
+        android:text="Registrar"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"/>
+
+</RelativeLayout>

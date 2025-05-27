@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "200086954090",
+    "project_id": "rutaspiura-97f47",
+    "storage_bucket": "rutaspiura-97f47.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:200086954090:android:9e7a2bd235c9eab6656a13",
+        "android_client_info": {
+          "package_name": "com.example.busmappiura"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGYi-y5z8yZjKK03VjMZt_HgsKL4bmb-0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
