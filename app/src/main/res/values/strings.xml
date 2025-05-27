@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">BusMapPiura</string>
+    <string name="txt_direccion">Direccion de Correo Electronico</string>
+    <string name="txt_contraseña">Contraseña </string>
+    <string name="txt_ingresa_correo">Ingresa tu correo electronico..</string>
+    <string name="txt_ingresa_contraseña">Ingresa tu contraseña..</string>
+    <string name="txt_olvidado">¿Has olvidado la contraseña?</string>
+    <string name="iniciar_ses">Iniciar Sesion</string>
+    <string name="registrarse">Registrarse</string>
+    <string name="title_activity_hotel_resena">HotelResena</string>
+    <string name="hotel_nombre">HOTEL \n &quot;"EL CACIQUE"&quot;</string>
+    <string name="b_sunrise_a">
+    21-B Sunrise Apartment 8339 Oceanside Ave \n Kapolei , Hawaii 39210
+    </string>
+    <string name="galer_a_de_">Galeria de fotos:</string>
+    <string name="ubicaci_n_">Ubicación</string>
+    <string name="rutas">Mapeo de rutas</string>
+    <string name="ingresa_lug">Ingresa lugar...</string>
+
+
+</resources>

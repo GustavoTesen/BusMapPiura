@@ -1,0 +1,38 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/hotel_rese_"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#05FFFF">
+
+    <!-- Fragmento del mapa ocupando toda la pantalla -->
+    <fragment
+        android:id="@+id/map_fragment"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Menú desplegable flotante por encima del mapa -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_margin="16dp"
+        android:hint="@string/rutas"
+        android:textColorHint="#000000"
+        android:elevation="8dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+        <AutoCompleteTextView
+            android:id="@+id/auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:shadowColor="#ffff"
+            android:background="#F44336"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+</RelativeLayout>

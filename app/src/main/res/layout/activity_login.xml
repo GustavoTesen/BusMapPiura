@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/correo"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToOutline="true"
+    android:background="#16425B"
+    >
+    <View
+        android:id="@+id/back"
+        android:layout_width="23dp"
+        android:layout_height="23dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="25dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="52dp"
+        android:background="@drawable/back"
+        />
+
+    <TextView
+        android:id="@+id/direcci_n_d"
+        android:layout_width="261dp"
+        android:layout_height="23dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="158dp"
+        android:fontFamily="serif"
+        android:gravity="top"
+        android:lineSpacingExtra="21sp"
+        android:text="@string/txt_direccion"
+        android:textColor="#ffffff"
+        android:textSize="13dp"
+        tools:ignore="TextSizeCheck" />
+
+    <!-- View 1 con texto -->
+
+
+    <EditText
+        android:id="@+id/rectangle"
+        android:layout_width="309dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="196dp"
+        android:background="@drawable/retangle"
+        android:hint="@string/txt_ingresa_correo"
+        android:inputType="textWebEmailAddress"
+        android:paddingLeft="10dp"
+        android:textAppearance="@style/ingresa_tu_"
+         />
+
+    <TextView
+        android:id="@+id/contrase_a"
+        android:layout_width="261dp"
+        android:layout_height="23dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="261dp"
+        android:fontFamily="serif"
+        android:lineSpacingExtra="21sp"
+        android:text="@string/txt_contraseña"
+        android:textAppearance="@style/contrase_a"
+        android:textSize="13dp"
+        tools:ignore="TextSizeCheck" />
+
+
+    <EditText
+        android:id="@+id/rectangle1"
+        android:layout_width="309dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="292dp"
+        android:inputType="textPassword"
+        android:background="@drawable/rectangle1"
+        android:hint="@string/txt_ingresa_contraseña"
+        android:fontFamily="serif"
+        android:textAppearance="@style/ingresa_tu_"
+        android:paddingLeft="10dp"
+
+
+        />
+
+    <ImageView
+        android:layout_width="19dp"
+        android:layout_height="19dp"
+        android:layout_marginLeft="325dp"
+        android:layout_marginTop="305dp"
+        android:layout_marginBottom="406dp"
+        android:background="@drawable/eye">
+
+    </ImageView>
+
+
+    <TextView
+        android:id="@+id/has_olvidad"
+        android:layout_width="261dp"
+        android:layout_height="23dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="352dp"
+        android:fontFamily="serif"
+        android:lineSpacingExtra="21sp"
+        android:text="@string/txt_olvidado"
+        android:textAppearance="@style/has_olvidad"
+        android:textSize="13dp"
+        tools:ignore="TextSizeCheck" />
+
+    <View
+        android:id="@+id/rectangle_5"
+        android:layout_width="309dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="500dp"
+        android:background="@drawable/rectangle2"
+        android:alpha="0.2"
+        />
+    <TextView
+        android:id="@+id/iniciar_ses"
+        android:layout_width="wrap_content"
+        android:layout_height="23dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="154dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="513dp"
+        android:text="@string/iniciar_ses"
+        android:textAppearance="@style/iniciar_sesi"
+        android:textColor="#FFFFFF"
+        android:gravity="top"
+        />
+    <View
+        android:id="@+id/rectangle_6"
+        android:layout_width="309dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="566dp"
+        android:background="@drawable/rectangle3"
+        />
+    <TextView
+        android:id="@+id/registrarse"
+        android:layout_width="wrap_content"
+        android:layout_height="23dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="166dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="579dp"
+        android:text="@string/registrarse"
+        android:textColor="#171616"
+        android:gravity="top"
+        />
+
+
+</RelativeLayout>
